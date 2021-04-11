@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon start",
+    "start": "NODE_ENV=staging nodemon start",
+    "production": "NODE_ENV=production nodemon start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -36,19 +36,6 @@ handler.handleReqRes = (req, res) => {
     let bodyData = '';
 
     const chosenHandler = routes[trimmedPath] ? routes[trimmedPath] : notFoundHandler;
-
-    chosenHandler(requestPropertise, (statusCode, payload) => {
-        statusCode = typeof statusCode === 'number' ? statusCode : 500;
-
-        payload = typeof payload === 'object' ? payload : {};
-
-        const payloadString = JSON.stringify(payload);
-
-        // Final response
-        res.writeHead(statusCode);
-        res.end(payloadString);
-    });
-
     req.on('data', (buffer) => {
         bodyData += decoder.write(buffer);
     });
@@ -56,7 +43,18 @@ handler.handleReqRes = (req, res) => {
     req.on('end', () => {
         bodyData += decoder.end();
 
-        console.log(bodyData);
+        chosenHandler(requestPropertise, (statusCode, payload) => {
+            statusCode = typeof statusCode === 'number' ? statusCode : 500;
+
+            payload = typeof payload === 'object' ? payload : {};
+
+            const payloadString = JSON.stringify(payload);
+
+            // Final response
+            res.writeHead(statusCode);
+            res.end(payloadString);
+        });
+
         // response handle
         res.end();
     });

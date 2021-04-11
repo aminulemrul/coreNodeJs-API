@@ -9,20 +9,50 @@
 const http = require('http');
 const { config } = require('process');
 const { handleReqRes } = require('./helpers/handleReqRes');
+const environment = require('./helpers/environments');
+const data = require('./lib/data');
 
 // app object - module scaffolding
 const app = {};
 
-// configuration
-app.config = {
-    port: 3000,
-};
+// testing file system - for create new file
+// const writeData = {
+//     name: 'Aminul Islam Emrul',
+//     age: '25',
+//     profession: 'Software Engineer',
+// };
+
+// data.create('test', 'newFile', writeData, (err) => {
+//     console.log(err);
+// });
+
+// read file data
+// data.read('test', 'newFile', (err, data) => {
+//     console.log(`Error: ${err}`, `Data: ${data}`);
+// });
+
+// update data
+// const updateData = {
+//     name: 'Aminul Islam Emrul',
+//     age: '25',
+//     profession: 'Software Engineer',
+//     background: 'Computer Science & Engineering (CSE)',
+// };
+// data.update('test', 'newFile', updateData, (err) => {
+//     console.log(`Error: ${err}`);
+// });
+
+// delete file
+// data.delete('test', 'newFile', (err) => {
+//     console.log(`Error: ${err}`);
+// });
 
 // create server
 app.createServer = () => {
     const server = http.createServer(app.handleReqRes);
-    server.listen(app.config.port, () => {
-        console.log(`Server start on port- ${app.config.port}`);
+    server.listen(environment.port, () => {
+        console.log(`Server start on - ${environment.envName}`);
+        console.log(`Server start on port- ${environment.port}`);
     });
 };
 
